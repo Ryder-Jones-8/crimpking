@@ -313,6 +313,40 @@ export class DataRepository {
       }));
   }
 
+  static async getGymLeaderboard(gymId: string, challengeType: ChallengeType): Promise<LeaderboardEntry[]> {
+    const gymClimbs = await this.getClimbs({ gym_id: gymId });
+    const gymClimbIds = new Set(gymClimbs.map(c => c.id));
+    const climbMap = new Map(gymClimbs.map(c => [c.id, c]));
+    const attempts = await this.getChallengeAttempts();
+
+    const bestByUser = new Map<string, ChallengeAttempt>();
+    attempts
+      .filter(a => a.challenge_type === challengeType && gymClimbIds.has(a.climb_id))
+      .forEach(attempt => {
+        const key = attempt.user_id || attempt.user_display_name;
+        const existing = bestByUser.get(key);
+        if (!existing || attempt.value < existing.value) {
+          bestByUser.set(key, attempt);
+        }
+      });
+
+    return Array.from(bestByUser.values())
+      .sort((a, b) => a.value - b.value)
+      .map((attempt, index) => {
+        const climb = climbMap.get(attempt.climb_id);
+        return {
+          rank: index + 1,
+          user_display_name: attempt.user_display_name,
+          value: attempt.value,
+          climb_id: attempt.climb_id,
+          climb_name: climb?.name,
+          gym_name: climb?.gym_name,
+          created_at: attempt.created_at,
+        };
+      })
+      .slice(0, 10);
+  }
+
   static async getGlobalLeaderboard(challengeType: ChallengeType): Promise<LeaderboardEntry[]> {
     const attempts = await this.getChallengeAttempts();
     const climbs = await this.getClimbs();

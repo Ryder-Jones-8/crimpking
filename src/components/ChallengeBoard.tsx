@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Clock3, Trophy, Zap, ArrowUpRight } from 'lucide-react';
 import { DataRepository } from '@/lib/db/repository';
 import { useAuth } from '@/lib/auth/AuthProvider';
+import { getGuestDisplayName, setGuestDisplayName } from '@/lib/auth/identity';
 import { ChallengeType, LeaderboardEntry } from '@/types';
 
 interface ChallengeBoardProps {
@@ -41,7 +42,7 @@ export default function ChallengeBoard({
   const [mode, setMode] = useState<ChallengeType>('speed');
   const [value, setValue] = useState<number>(30);
   const { user, profile } = useAuth();
-  const [userName, setUserName] = useState('Guest Climber');
+  const [userName, setUserName] = useState(() => getGuestDisplayName());
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>(
@@ -51,6 +52,11 @@ export default function ChallengeBoard({
   useEffect(() => {
     if (profile?.display_name) setUserName(profile.display_name);
   }, [profile?.display_name]);
+
+  const handleNameChange = (name: string) => {
+    setUserName(name);
+    if (!profile?.display_name) setGuestDisplayName(name);
+  };
 
   const activeConfig = MODE_CONFIG[mode];
   const Icon = activeConfig.icon;
@@ -153,7 +159,7 @@ export default function ChallengeBoard({
         <input
           type="text"
           value={userName}
-          onChange={e => setUserName(e.target.value)}
+          onChange={e => handleNameChange(e.target.value)}
           placeholder="Your name"
           className="w-full mt-2 bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-slate-100 text-sm"
         />

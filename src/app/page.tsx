@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { DataRepository } from "@/lib/db/repository";
-import { Mountain, QrCode, TrendingUp } from "lucide-react";
+import { Mountain, Search, User } from "lucide-react";
 import StatsCarousel from "@/components/StatsCarousel";
 
 export default async function HomePage() {
@@ -42,24 +42,24 @@ export default async function HomePage() {
         {/* Action cards */}
         <div className="grid grid-cols-1 gap-3">
           <Link
-            href="/manage"
+            href="/gyms"
             className="group bg-slate-900 border border-slate-800 active:border-emerald-500/50 rounded-2xl p-4 transition flex items-center gap-3"
           >
-            <QrCode className="w-6 h-6 text-emerald-400 flex-shrink-0" />
+            <Search className="w-6 h-6 text-emerald-400 flex-shrink-0" />
             <div>
-              <h3 className="font-bold text-slate-100 text-sm">Manage Climbs & QR Tags</h3>
-              <p className="text-xs text-slate-400 mt-0.5">Add gyms, walls, and climbs. Generate printable QR tags.</p>
+              <h3 className="font-bold text-slate-100 text-sm">Browse Gyms</h3>
+              <p className="text-xs text-slate-400 mt-0.5">Look up gyms, see their climbs, grading bias, and leaderboards.</p>
             </div>
           </Link>
 
           <Link
-            href="/normalization"
+            href="/profile"
             className="group bg-slate-900 border border-slate-800 active:border-emerald-500/50 rounded-2xl p-4 transition flex items-center gap-3"
           >
-            <TrendingUp className="w-6 h-6 text-emerald-400 flex-shrink-0" />
+            <User className="w-6 h-6 text-emerald-400 flex-shrink-0" />
             <div>
-              <h3 className="font-bold text-slate-100 text-sm">Gym Grading Bias</h3>
-              <p className="text-xs text-slate-400 mt-0.5">See which gyms grade soft or stiff relative to the community.</p>
+              <h3 className="font-bold text-slate-100 text-sm">My Stats</h3>
+              <p className="text-xs text-slate-400 mt-0.5">Your fastest climbs, fewest-holds records, and ratings given.</p>
             </div>
           </Link>
 

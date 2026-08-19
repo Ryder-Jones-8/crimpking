@@ -32,7 +32,7 @@ export default async function ClimbDetailPage({ params }: { params: { token: str
   return (
     <main className="bg-slate-950 min-h-full pb-8">
       <header className="sticky top-0 z-10 bg-slate-950/90 backdrop-blur-lg border-b border-slate-800 px-2 py-3 flex items-center gap-1">
-        <Link href="/" className="p-2 text-slate-300 active:text-white">
+        <Link href={`/gyms/${climb.gym_id}`} className="p-2 text-slate-300 active:text-white">
           <ChevronLeft className="w-5 h-5" />
         </Link>
         <span className="font-bold text-sm text-slate-200 truncate">{climb.name}</span>

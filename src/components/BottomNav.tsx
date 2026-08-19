@@ -2,15 +2,16 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Settings, BarChart3, Trophy, UserCircle } from 'lucide-react';
+import { Home, Settings, Search, Heart, User, UserCircle } from 'lucide-react';
 import { isGymStaff, useUserRole } from '@/lib/auth/role';
 import { useAuth } from '@/lib/auth/AuthProvider';
 
 const BASE_TABS = [
   { href: '/', label: 'Home', icon: Home, staffOnly: false },
+  { href: '/gyms', label: 'Gyms', icon: Search, staffOnly: false },
+  { href: '/favorites', label: 'Favorites', icon: Heart, staffOnly: false },
+  { href: '/profile', label: 'My Stats', icon: User, staffOnly: false },
   { href: '/manage', label: 'Manage', icon: Settings, staffOnly: true },
-  { href: '/normalization', label: 'Stats', icon: BarChart3, staffOnly: false },
-  { href: '/leaderboards', label: 'Leaders', icon: Trophy, staffOnly: false },
 ];
 
 export default function BottomNav() {
