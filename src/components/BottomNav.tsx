@@ -2,24 +2,30 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Settings, BarChart3, Trophy } from 'lucide-react';
+import { Home, Settings, BarChart3, Trophy, UserCircle } from 'lucide-react';
 import { isGymStaff, useUserRole } from '@/lib/auth/role';
+import { useAuth } from '@/lib/auth/AuthProvider';
 
-const TABS = [
-  { href: '/', label: 'Home', icon: Home },
+const BASE_TABS = [
+  { href: '/', label: 'Home', icon: Home, staffOnly: false },
   { href: '/manage', label: 'Manage', icon: Settings, staffOnly: true },
-  { href: '/normalization', label: 'Stats', icon: BarChart3 },
-  { href: '/leaderboards', label: 'Leaders', icon: Trophy },
+  { href: '/normalization', label: 'Stats', icon: BarChart3, staffOnly: false },
+  { href: '/leaderboards', label: 'Leaders', icon: Trophy, staffOnly: false },
 ];
 
 export default function BottomNav() {
   const pathname = usePathname();
   const [role] = useUserRole();
+  const { isConfigured } = useAuth();
 
   // Hide the tab bar on the focused QR rating flow so it doesn't compete with the submit button.
   if (pathname?.startsWith('/climb/')) return null;
 
-  const visibleTabs = TABS.filter(tab => !tab.staffOnly || isGymStaff(role));
+  const tabs = isConfigured
+    ? [...BASE_TABS, { href: '/account', label: 'Account', icon: UserCircle, staffOnly: false }]
+    : BASE_TABS;
+
+  const visibleTabs = tabs.filter(tab => !tab.staffOnly || isGymStaff(role));
 
   return (
     <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md z-40 bg-slate-900/90 backdrop-blur-lg border-t border-slate-800 safe-bottom">

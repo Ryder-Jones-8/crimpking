@@ -78,6 +78,7 @@ export interface GymNormalizationStats {
 export interface RatingSubmitPayload {
   climb_id: string;
   user_id?: string | null;
+  user_display_name?: string;
   comparative_rating: ComparativeRating;
   quality_stars: number;
   comment?: string;

@@ -1,8 +1,9 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Clock3, Trophy, Zap, ArrowUpRight } from 'lucide-react';
 import { DataRepository } from '@/lib/db/repository';
+import { useAuth } from '@/lib/auth/AuthProvider';
 import { ChallengeType, LeaderboardEntry } from '@/types';
 
 interface ChallengeBoardProps {
@@ -39,12 +40,17 @@ export default function ChallengeBoard({
 }: ChallengeBoardProps) {
   const [mode, setMode] = useState<ChallengeType>('speed');
   const [value, setValue] = useState<number>(30);
+  const { user, profile } = useAuth();
   const [userName, setUserName] = useState('Guest Climber');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>(
     mode === 'speed' ? initialSpeedBoard : initialFewestHoldsBoard,
   );
+
+  useEffect(() => {
+    if (profile?.display_name) setUserName(profile.display_name);
+  }, [profile?.display_name]);
 
   const activeConfig = MODE_CONFIG[mode];
   const Icon = activeConfig.icon;
@@ -69,6 +75,7 @@ export default function ChallengeBoard({
     try {
       const newAttempt = await DataRepository.submitChallengeAttempt({
         climb_id: climbId,
+        user_id: user?.id,
         user_display_name: userName.trim() || 'Guest Climber',
         challenge_type: mode,
         value,

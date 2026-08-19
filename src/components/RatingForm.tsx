@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ComparativeRating } from '@/types';
 import { DataRepository } from '@/lib/db/repository';
+import { useAuth } from '@/lib/auth/AuthProvider';
 import { Star, Camera, X, Loader2, ArrowDown, Equal, ArrowUp } from 'lucide-react';
 
 interface RatingFormProps {
@@ -19,6 +20,7 @@ const COMPARATIVE_OPTIONS: { value: ComparativeRating; label: string; icon: Reac
 
 export default function RatingForm({ climbId, climbGrade }: RatingFormProps) {
   const router = useRouter();
+  const { user, profile } = useAuth();
   const [comparative, setComparative] = useState<ComparativeRating>('as_graded');
   const [stars, setStars] = useState<number>(0);
   const [hoverStars, setHoverStars] = useState<number>(0);
@@ -54,6 +56,8 @@ export default function RatingForm({ climbId, climbGrade }: RatingFormProps) {
 
       await DataRepository.submitRating({
         climb_id: climbId,
+        user_id: user?.id,
+        user_display_name: profile?.display_name,
         comparative_rating: comparative,
         quality_stars: stars,
         comment: comment.trim() || undefined,

@@ -353,7 +353,7 @@ export class DataRepository {
       id: `r-${Date.now()}`,
       climb_id: payload.climb_id,
       user_id: payload.user_id || 'anonymous-climber',
-      user_display_name: payload.user_id ? 'Authenticated Climber' : 'Guest Climber',
+      user_display_name: payload.user_display_name || (payload.user_id ? 'Authenticated Climber' : 'Guest Climber'),
       comparative_rating: payload.comparative_rating,
       quality_stars: payload.quality_stars,
       comment: payload.comment || '',
@@ -368,6 +368,7 @@ export class DataRepository {
       if (supabase) {
         const { data, error } = await supabase.from('ratings').insert([{
           climb_id: payload.climb_id,
+          user_id: payload.user_id || null,
           comparative_rating: payload.comparative_rating,
           quality_stars: payload.quality_stars,
           comment: payload.comment,
