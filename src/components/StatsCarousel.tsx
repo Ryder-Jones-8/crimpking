@@ -10,7 +10,6 @@ interface StatCardConfig {
   icon: LucideIcon;
   href: string;
   gradient: string;
-  emoji: string;
 }
 
 function useCountUp(target: number, durationMs = 900) {
@@ -51,7 +50,6 @@ function StatCard({ stat }: { stat: StatCardConfig }) {
         <div className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center">
           <Icon className="w-4 h-4 text-white" />
         </div>
-        <span className="text-base">{stat.emoji}</span>
       </div>
       <p className="text-2xl font-black text-white mt-3 tabular-nums">{count}</p>
       <p className="text-[11px] text-white/80 font-semibold mt-0.5">{stat.label}</p>
@@ -71,10 +69,10 @@ export default function StatsCarousel({
   wallCount: number;
 }) {
   const stats: StatCardConfig[] = [
-    { label: 'Gyms Tracked', value: gymCount, icon: Building2, href: '/manage', gradient: 'from-emerald-500 to-emerald-800', emoji: '🏢' },
-    { label: 'Active Climbs', value: activeClimbs, icon: Mountain, href: '/manage', gradient: 'from-sky-500 to-blue-800', emoji: '🧗' },
-    { label: 'Ratings Submitted', value: totalRatings, icon: Star, href: '/normalization', gradient: 'from-amber-400 to-yellow-600', emoji: '⭐' },
-    { label: 'Walls / Zones', value: wallCount, icon: Layers, href: '/manage', gradient: 'from-stone-500 to-stone-700', emoji: '🪨' },
+    { label: 'Gyms Tracked', value: gymCount, icon: Building2, href: '/manage', gradient: 'from-emerald-500 to-emerald-800' },
+    { label: 'Active Climbs', value: activeClimbs, icon: Mountain, href: '/manage', gradient: 'from-sky-500 to-blue-800' },
+    { label: 'Ratings Submitted', value: totalRatings, icon: Star, href: '/normalization', gradient: 'from-amber-400 to-yellow-600' },
+    { label: 'Walls / Zones', value: wallCount, icon: Layers, href: '/manage', gradient: 'from-stone-500 to-stone-700' },
   ];
 
   return (
