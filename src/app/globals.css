@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  background-color: #0f172a;
+  color: #f8fafc;
+  overscroll-behavior-y: none;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Bold condensed "expedition poster" look for headings and wordmarks */
+h1, h2, h3, .font-display {
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: 0.01em;
+}
+
+/* Topographic contour-line + rock grain texture behind the app shell, evoking a crag/summit map */
+.outdoor-texture {
+  background-color: #0f172a;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(22, 163, 74, 0.14), transparent 55%),
+    repeating-radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.05) 0px, rgba(255, 255, 255, 0.05) 1px, transparent 1px, transparent 26px),
+    repeating-radial-gradient(circle at 85% 75%, rgba(255, 255, 255, 0.04) 0px, rgba(255, 255, 255, 0.04) 1px, transparent 1px, transparent 34px);
+  background-attachment: fixed;
+}
+
+:root {
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.safe-top {
+  padding-top: var(--safe-top);
+}
+
+.safe-bottom {
+  padding-bottom: var(--safe-bottom);
+}
+
+/* Hide scrollbars on the horizontal tab strip while keeping it scrollable */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

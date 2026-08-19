@@ -1,0 +1,18 @@
+{
+  "name": "SendCheck - Climb Rating Normalization",
+  "short_name": "SendCheck",
+  "description": "Scan a QR code to rate boulder problems and routes, and compare gym grading scales.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
